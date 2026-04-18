@@ -1,1485 +1,1357 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GET FADED BarberShop | Shamokin, PA Barber Shop</title>
-
-  <meta name="description" content="GET FADED BarberShop in Shamokin, PA offers clean fades, sharp lineups, beard trims, and quality grooming in a professional barbershop environment." />
-  <meta name="keywords" content="barber Shamokin PA, barbershop Shamokin, fade haircut Shamokin, beard trim Shamokin, kids haircut Shamokin, lineup Shamokin, GET FADED BarberShop" />
-
-  <meta property="og:title" content="GET FADED BarberShop | Shamokin, PA Barber Shop" />
-  <meta property="og:description" content="Clean fades, sharp lineups, beard work, and professional grooming in Shamokin, PA." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="./assets/images/shopfront.jpg" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="GET FADED BarberShop | Shamokin, PA Barber Shop" />
-  <meta name="twitter:description" content="Clean fades, sharp lineups, beard work, and professional grooming in Shamokin, PA." />
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Barbershop",
-    "name": "GET FADED BarberShop",
-    "image": "./assets/images/shopfront.jpg",
-    "telephone": "+1-570-492-4680",
-    "email": "getfadedbyfern@gmail.com",
-    "openingHours": [
-      "Mo 10:00-17:30",
-      "Tu 10:00-17:30",
-      "We 10:00-17:30",
-      "Th 10:00-17:30",
-      "Fr 10:00-18:30",
-      "Sa 10:00-18:30"
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "322 N Shamokin St",
-      "addressLocality": "Shamokin",
-      "addressRegion": "PA",
-      "postalCode": "17872",
-      "addressCountry": "US"
-    },
-    "areaServed": "Shamokin, PA"
-  }
-  </script>
-
-  <style>
-    :root {
-      --bg: #080808;
-      --panel: rgba(17,17,17,0.84);
-      --line: rgba(255,255,255,0.08);
-      --text: #f4efe8;
-      --muted: rgba(244,239,232,0.72);
-      --gold: #d4a373;
-      --gold-soft: #c28d58;
-      --red: #d14e43;
-      --blue: #6e95cb;
-      --radius: 24px;
-      --shadow: 0 24px 60px rgba(0,0,0,0.34);
-      --max: 1200px;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    .bg-image {
-      position: fixed;
-      inset: 0;
-      z-index: -4;
-      background:
-        linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.84)),
-        url('./assets/images/shopfront.jpg') center/cover no-repeat;
-      background-attachment: fixed;
-      transform: scale(1.02);
-    }
-
-    .bg-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: -3;
-      background:
-        radial-gradient(circle at center, transparent 25%, rgba(0,0,0,0.38) 65%, rgba(0,0,0,0.78) 100%),
-        linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(0,0,0,0.52));
-      pointer-events: none;
-    }
-
-    .heartbeat-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      pointer-events: none;
-      opacity: 0.7;
-    }
-
-    .heartbeat-wrap {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: 40%;
-      justify-content: center;
-    }
-
-    .heartbeat-wrap svg {
-      width: min(1500px, 126vw);
-      height: auto;
-      overflow: visible;
-    }
-
-    .heartbeat-line {
-      fill: none;
-      stroke: url(#ekgGradient);
-      stroke-width: 4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: 14 10;
-      animation: dashFlow 16s linear infinite, linePulse 2.6s ease-in-out infinite;
-      filter: drop-shadow(0 0 8px rgba(255,255,255,0.14));
-    }
-
-    .heartbeat-glow {
-      fill: none;
-      stroke: rgba(255,255,255,0.14);
-      stroke-width: 10;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      filter: blur(10px);
-      opacity: 0.44;
-      animation: lineGlow 2.8s ease-in-out infinite;
-    }
-
-    .tool-layer {
-      opacity: 0.95;
-      filter: drop-shadow(0 0 12px rgba(212,163,115,0.18));
-      animation: toolFloat 3.4s ease-in-out infinite;
-      transform-origin: center;
-    }
-
-    @keyframes dashFlow {
-      from { stroke-dashoffset: 0; }
-      to { stroke-dashoffset: -480; }
-    }
-
-    @keyframes linePulse {
-      0%,100% { opacity: 0.86; }
-      50% { opacity: 1; }
-    }
-
-    @keyframes lineGlow {
-      0%,100% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-    }
-
-    @keyframes toolFloat {
-      0%,100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-5px) scale(1.02); }
-    }
-
-    .container {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(5,5,5,0.86);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .topbar-inner {
-      min-height: 78px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 22px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-
-    .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      box-shadow: 0 0 18px rgba(212,163,115,0.2);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .nav a:hover {
-      color: #fff;
-    }
-
-    .mobile-toggle {
-      display: none;
-      min-width: 46px;
-      min-height: 46px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      cursor: pointer;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      align-items: center;
-      padding: 72px 0 56px;
-    }
-
-    .hero-inner {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      margin-bottom: 18px;
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 0.34em;
-      font-size: 0.78rem;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(3rem, 7vw, 6rem);
-      line-height: 0.95;
-      letter-spacing: 0.03em;
-      color: var(--gold);
-    }
-
-    .hero-copy p {
-      margin: 16px 0 0;
-      max-width: 700px;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 1.05rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 28px;
-    }
-
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-      color: #111;
-      font-weight: 800;
-      box-shadow: 0 0 18px rgba(212,163,115,0.26);
-      transition: transform 0.2s ease;
-      text-align: center;
-    }
-
-    .cta:hover {
-      transform: translateY(-1px);
-    }
-
-    .cta.secondary {
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      box-shadow: none;
-    }
-
-    .card,
-    .glass-panel,
-    .hero-card,
-    .service-card,
-    .stat-card,
-    .location-card,
-    .seo-box {
-      border-radius: var(--radius);
-      background: var(--panel);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-    }
-
-    .hero-card {
-      padding: 26px;
-    }
-
-    .hero-card img {
-      width: 100%;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.08);
-      object-fit: cover;
-      aspect-ratio: 1 / 1;
-    }
-
-    .hero-card small {
-      display: block;
-      margin-top: 14px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    section.block {
-      padding: 84px 0;
-    }
-
-    .section-head {
-      margin-bottom: 26px;
-    }
-
-    .section-title {
-      margin: 0;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      color: var(--gold);
-    }
-
-    .section-sub {
-      margin: 10px 0 0;
-      max-width: 760px;
-      color: var(--muted);
-      line-height: 1.75;
-    }
-
-    .stats-grid,
-    .team-grid,
-    .service-grid,
-    .location-grid,
-    .featured-review-grid,
-    .photo-review-grid,
-    .trust-review-grid {
-      display: grid;
-      gap: 20px;
-    }
-
-    .stats-grid { grid-template-columns: repeat(3, 1fr); }
-    .team-grid { grid-template-columns: repeat(4, 1fr); }
-    .service-grid, .location-grid { grid-template-columns: repeat(2, 1fr); }
-    .featured-review-grid { grid-template-columns: repeat(3, 1fr); }
-    .photo-review-grid { grid-template-columns: repeat(2, 1fr); }
-    .trust-review-grid { grid-template-columns: repeat(3, 1fr); }
-
-    .card,
-    .service-card,
-    .stat-card,
-    .location-card,
-    .seo-box {
-      padding: 24px;
-    }
-
-    .card img {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.08);
-      margin-bottom: 16px;
-    }
-
-    .owner-card {
-      overflow: hidden;
-      background:
-        radial-gradient(circle at top left, rgba(212,163,115,0.10), transparent 28%),
-        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
-    }
-
-    .owner-photo-wrap {
-      position: relative;
-      margin-bottom: 18px;
-    }
-
-    .owner-photo {
-      width: 100%;
-      height: 360px;
-      object-fit: cover;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.10);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.30);
-    }
-
-    .owner-badge {
-      position: absolute;
-      left: 14px;
-      bottom: 14px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.74);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: var(--gold);
-      font-size: 0.76rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      backdrop-filter: blur(10px);
-    }
-
-    .owner-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-
-    .owner-pill,
-    .owner-highlight,
-    .review-badge,
-    .review-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
-
-    .owner-highlights,
-    .review-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 16px 0 18px;
-    }
-
-    .label {
-      display: block;
-      margin-bottom: 10px;
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      font-size: 0.72rem;
-    }
-
-    .muted { color: var(--muted); }
-    .price { color: var(--gold); font-size: 1.35rem; font-weight: 800; }
-
-    .work-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 20px;
-      align-items: start;
-    }
-
-    .feature-media,
-    .map-media {
-      min-height: 420px;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .feature-media img,
-    .map-media img,
-    .map-media iframe {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border: 0;
-      display: block;
-    }
-
-    .gallery-stack {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .gallery-item {
-      overflow: hidden;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.03);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .gallery-item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.3);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-    }
-
-    .gallery-caption {
-      padding: 12px 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .review-section {
-      position: relative;
-      padding-top: 108px;
-    }
-
-    .review-summary-bar {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 20px;
-      margin-bottom: 26px;
-    }
-
-    .glass-panel {
-      padding: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-    }
-
-    .review-score {
-      display: flex;
-      align-items: flex-end;
-      gap: 14px;
-      margin-bottom: 12px;
-    }
-
-    .review-score strong {
-      font-size: clamp(2.7rem, 5vw, 4rem);
-      line-height: 1;
-      color: var(--gold);
-    }
-
-    .review-stars {
-      color: var(--gold);
-      letter-spacing: 0.16em;
-      font-size: 1.15rem;
-    }
-
-    .review-person {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .review-name {
-      font-weight: 800;
-      font-size: 1.08rem;
-    }
-
-    .review-meta {
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-top: 4px;
-    }
-
-    .review-quote {
-      color: var(--text);
-      line-height: 1.8;
-      font-size: 1rem;
-    }
-
-    .photo-review-media {
-      width: 100%;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-      margin-top: 16px;
-      aspect-ratio: 16 / 11;
-      background: rgba(255,255,255,0.03);
-    }
-
-    .photo-review-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .review-marquee {
-      overflow: hidden;
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      padding: 18px 0;
-    }
-
-    .review-track {
-      display: flex;
-      gap: 16px;
-      width: max-content;
-      animation: reviewScroll 38s linear infinite;
-      padding: 0 18px;
-    }
-
-    .mini-review {
-      min-width: 280px;
-      max-width: 280px;
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(0,0,0,0.25);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .mini-review p {
-      margin: 10px 0 0;
-      line-height: 1.65;
-      color: var(--text);
-    }
-
-    .mini-review small {
-      display: block;
-      margin-top: 10px;
-      color: var(--muted);
-    }
-
-    @keyframes reviewScroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    footer {
-      padding: 0 0 112px;
-    }
-
-    .footer-inner {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 28px;
-      color: rgba(255,255,255,0.58);
-      font-size: 0.95rem;
-    }
-
-    .music-player {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      z-index: 55;
-      width: min(92vw, 340px);
-      padding: 14px;
-      border-radius: 24px;
-      background: rgba(3,3,3,0.92);
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 22px 45px rgba(0,0,0,0.42);
-      backdrop-filter: blur(18px);
-    }
-
-    .music-header,
-    .music-buttons {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .music-header { justify-content: space-between; }
-    .music-buttons { margin-top: 18px; flex-wrap: wrap; }
-    .music-title { margin: 4px 0 0; font-size: 0.95rem; font-weight: 700; color: var(--gold); }
-
-    .player-btn,
-    .tiny-btn,
-    input[type='range'] {
-      font: inherit;
-    }
-
-    .player-btn,
-    .tiny-btn {
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      border-radius: 999px;
-      cursor: pointer;
-    }
-
-    .player-btn {
-      background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-      color: #111;
-      font-weight: 800;
-      padding: 10px 16px;
-    }
-
-    .tiny-btn { padding: 8px 12px; }
-
-    .progress {
-      margin-top: 12px;
-      height: 7px;
-      border-radius: 999px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.08);
-    }
-
-    .progress-bar {
-      width: 0;
-      height: 100%;
-      background: linear-gradient(90deg, var(--red), var(--gold));
-    }
-
-    input[type='range'] { accent-color: var(--gold); }
-
-    .unmute-banner {
-      position: fixed;
-      left: 50%;
-      bottom: 106px;
-      transform: translateX(-50%);
-      z-index: 54;
-      width: min(92vw, 480px);
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: rgba(6,6,6,0.9);
-      border: 1px solid rgba(255,255,255,0.1);
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.36);
-      backdrop-filter: blur(16px);
-    }
-
-    .unmute-banner.show { display: flex; }
-
-    @media (max-width: 1024px) {
-      .hero-inner,
-      .work-grid { grid-template-columns: 1fr; }
-
-      .team-grid { grid-template-columns: 1fr 1fr; }
-      .stats-grid,
-      .service-grid,
-      .location-grid { grid-template-columns: 1fr 1fr; }
-
-      .review-summary-bar { grid-template-columns: 1fr; }
-      .featured-review-grid,
-      .trust-review-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 760px) {
-      .mobile-toggle {
-        display: inline-grid;
-        place-items: center;
-      }
-
-      .nav {
-        display: none;
-        width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 8px 0 16px;
-      }
-
-      .nav.show { display: flex; }
-
-      .topbar-inner {
-        flex-wrap: wrap;
-        padding: 14px 0;
-      }
-
-      .stats-grid,
-      .team-grid,
-      .service-grid,
-      .location-grid,
-      .featured-review-grid,
-      .photo-review-grid,
-      .trust-review-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .gallery-stack { grid-template-columns: 1fr 1fr; }
-
-      .music-player {
-        right: 10px;
-        left: 10px;
-        width: auto;
-        bottom: 10px;
-      }
-
-      .unmute-banner {
-        left: 10px;
-        right: 10px;
-        width: auto;
-        transform: none;
-        bottom: 126px;
-      }
-
-      section.block { padding: 68px 0; }
-    }
-  </style>
-</head>
-<body>
-  <div class="bg-image"></div>
-  <div class="bg-overlay"></div>
-
-  <div class="heartbeat-overlay" aria-hidden="true">
-    <div class="heartbeat-wrap">
-      <svg viewBox="0 0 1400 520" role="presentation">
-        <defs>
-          <linearGradient id="ekgGradient" x1="0" y1="0" x2="1400" y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#f7e7dc" />
-            <stop offset="28%" stop-color="#d14e43" />
-            <stop offset="48%" stop-color="#f7e7dc" />
-            <stop offset="76%" stop-color="#6e95cb" />
-            <stop offset="100%" stop-color="#f7e7dc" />
-          </linearGradient>
-        </defs>
-
-        <path class="heartbeat-glow" d="M20 260 L90 320 L140 320 L165 110 L180 370 L235 210 L290 280 L360 280 L390 120 L410 320 L470 320 L500 390 L555 190 L590 240 L660 240 L720 300 L790 300 L820 120 L835 350 L885 255 L930 195 L990 255 L1060 255 L1100 320 L1160 320 L1190 135 L1205 350 L1265 200 L1320 200 L1370 120" />
-        <path class="heartbeat-line" d="M20 260 L90 320 L140 320 L165 110 L180 370 L235 210 L290 280 L360 280 L390 120 L410 320 L470 320 L500 390 L555 190 L590 240 L660 240 L720 300 L790 300 L820 120 L835 350 L885 255 L930 195 L990 255 L1060 255 L1100 320 L1160 320 L1190 135 L1205 350 L1265 200 L1320 200 L1370 120" />
-
-        <g class="tool-layer">
-          <rect x="255" y="145" width="62" height="210" rx="28" fill="#efefef" opacity="0.95"></rect>
-          <rect x="270" y="145" width="10" height="210" transform="rotate(30 275 250)" fill="#c74737"></rect>
-          <rect x="292" y="145" width="10" height="210" transform="rotate(30 297 250)" fill="#537ab3"></rect>
-        </g>
-      </svg>
-    </div>
-  </div>
-
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <a class="brand" href="#home">
-        <span class="brand-mark">✂</span>
-        <span>GET FADED</span>
-      </a>
-
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu">☰</button>
-
-      <nav class="nav" id="navMenu">
-        <a href="#barbers">Barbers</a>
-        <a href="#services">Services</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero" id="home">
-      <div class="container hero-inner">
-        <div class="hero-copy">
-          <span class="eyebrow">Cuts • Culture • Community</span>
-          <h1>GET FADED <br>BarberShop</h1>
-          <p>Not just a cut — a reset.</p>
-          <p>Highly rated barbershop in Shamokin, PA offering clean fades, sharp lineups, beard work, and quality grooming in a professional shop environment.</p>
-          <p>Located at 322 N Shamokin St, Shamokin, PA 17872, GET FADED BarberShop serves the local community with modern cuts, fades, beard trims, and detailed grooming.</p>
-
-          <div class="hero-actions">
-            <a class="cta" href="tel:5704924680">Call to Set an Appointment</a>
-          </div>
-        </div>
-
-        <div class="hero-card">
-          <img src="./assets/images/shopfront.jpg" alt="GET FADED BarberShop storefront or interior" loading="eager" />
-          <small>Premium visual layout with dark branded styling, local business structure, and a clean, laid-back customer experience.</small>
-        </div>
-      </div>
-    </section>
-
-    <section class="block">
-      <div class="container">
-        <div class="stats-grid">
-          <div class="stat-card">
-            <span class="label">Location</span>
-            <div>322 N Shamokin St<br>Shamokin, PA 17872</div>
-          </div>
-
-          <div class="stat-card">
-            <span class="label">Hours</span>
-            <div>Mon–Thu 10AM–5:30PM<br>Fri–Sat 10AM–6:30PM<br>Sun Closed</div>
-          </div>
-
-          <div class="stat-card">
-            <span class="label">Call</span>
-            <div>
-              <a href="tel:5704924680">(570) 492-4680</a><br>
-              <span class="muted">getfadedbyfern@gmail.com</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="barbers">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Our Team</span>
-          <h2 class="section-title">Get to Know the Owner</h2>
-        </div>
-
-        <div class="team-grid">
-          <article class="card owner-card">
-            <div class="owner-photo-wrap">
-              <img class="owner-photo" src="./assets/images/owner-barber-fernando.jpg" alt="Fernando owner barber at GET FADED BarberShop" loading="lazy" />
-              <span class="owner-badge">Owner / Barber</span>
-            </div>
-
-            <div class="owner-title">
-              <strong>Fernando</strong>
-              <span class="owner-pill">Shamokin, PA</span>
-            </div>
-
-            <div class="owner-highlights" style="margin-top: 6px; margin-bottom: 14px;">
-              <span class="owner-highlight">Highly rated locally</span>
-              <span class="owner-highlight">Known for clean detail work</span>
-              <span class="owner-highlight">Trusted Shamokin barber</span>
-            </div>
-
-            <p class="muted">Specializes in fades, precision cuts, and detailed grooming.</p>
-            <p class="muted">Known locally for consistent work, clean details, and a professional, welcoming shop experience.</p>
-
-            <div class="owner-highlights">
-              <span class="owner-highlight">Clean fades</span>
-              <span class="owner-highlight">Sharp lineups</span>
-              <span class="owner-highlight">Beard work</span>
-              <span class="owner-highlight">Owner-operated shop</span>
-            </div>
-
-            <a class="cta secondary" href="tel:5704924680">Call to Set an Appointment</a>
-          </article>
-
-          <article class="card">
-            <img src="./assets/images/kids-haircut-barber.jpg" alt="Kids haircut at GET FADED BarberShop" loading="lazy" />
-            <strong>Kids Cuts</strong>
-            <p class="muted">Friendly shop environment with clean cuts for younger clients too.</p>
-          </article>
-
-          <article class="card">
-            <img src="./assets/images/clean-lineup-cut.jpg" alt="Clean lineup haircut at GET FADED BarberShop" loading="lazy" />
-            <strong>Sharp Details</strong>
-            <p class="muted">Crisp lineups and polished finishes for all styles.</p>
-          </article>
-
-          <article class="card">
-            <img src="./assets/images/beard-lineup-shamokin.jpg" alt="Beard lineup and grooming at GET FADED BarberShop" loading="lazy" />
-            <strong>Beard Work</strong>
-            <p class="muted">Sharp beard shaping, clean edges, and polished finishing work.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="services">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Our Services</span>
-          <h2 class="section-title">Premium Grooming</h2>
-          <p class="section-sub">Placeholder services and placeholder prices are set below so the section looks complete now and can be swapped later with the shop’s final pricing.</p>
-        </div>
-
-        <div class="service-grid">
-          <div class="service-card">
-            <span class="label">Haircut</span>
-            <div class="muted">30–45 min</div>
-            <p class="muted">Clean fades, modern cuts, lineups, and polished finishes.</p>
-            <div class="price">$45+</div>
-          </div>
-
-          <div class="service-card">
-            <span class="label">Haircut + Beard</span>
-            <div class="muted">45–60 min</div>
-            <p class="muted">Full haircut paired with beard shaping and detail work.</p>
-            <div class="price">$60+</div>
-          </div>
-
-          <div class="service-card">
-            <span class="label">Beard Trim</span>
-            <div class="muted">15–25 min</div>
-            <p class="muted">Clean beard shaping, edge work, and a polished finish.</p>
-            <div class="price">$20+</div>
-          </div>
-
-          <div class="service-card">
-            <span class="label">Lineup / Shape Up</span>
-            <div class="muted">15–20 min</div>
-            <p class="muted">Sharp line work for hairline, edges, and finishing detail.</p>
-            <div class="price">$18+</div>
-          </div>
-
-          <div class="service-card">
-            <span class="label">Kids Cut</span>
-            <div class="muted">20–35 min</div>
-            <p class="muted">Clean, kid-friendly service in a laid-back shop environment.</p>
-            <div class="price">$30+</div>
-          </div>
-
-          <div class="service-card">
-            <span class="label">Razor Shave</span>
-            <div class="muted">20–30 min</div>
-            <p class="muted">Smooth shave service with premium detail and finish.</p>
-            <div class="price">$40+</div>
-          </div>
-
-          <div class="service-card">
-            <span class="label">Design Work</span>
-            <div class="muted">By request</div>
-            <p class="muted">Custom parts, design details, and style-focused finishing touches.</p>
-            <div class="price">$15+ add-on</div>
-          </div>
-
-          <div class="service-card">
-            <span class="label">Custom Looks</span>
-            <div class="muted">By request</div>
-            <p class="muted">Waves, specialty styling, and personalized grooming work.</p>
-            <div class="price">Custom quote</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="gallery">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Our Work</span>
-          <h2 class="section-title">Fresh Cuts</h2>
-        </div>
-
-        <div class="work-grid">
-          <div class="feature-media">
-            <img src="./assets/images/barbershop-interior-shamokin.jpg" alt="Inside GET FADED BarberShop in Shamokin PA" loading="lazy" />
-          </div>
-
-          <div class="gallery-stack">
-            <div class="gallery-item">
-              <img src="./assets/images/barber-fade-shamokin-pa-1.jpg" alt="Barber doing a fade haircut in Shamokin PA" loading="lazy" />
-              <div class="gallery-caption">Precision fade in progress</div>
-            </div>
-
-            <div class="gallery-item">
-              <img src="./assets/images/modern-fade-cut.jpg" alt="Modern fade haircut clean lineup" loading="lazy" />
-              <div class="gallery-caption">Clean modern fade</div>
-            </div>
-
-            <div class="gallery-item">
-              <img src="./assets/images/beard-lineup-shamokin.jpg" alt="Sharp beard lineup at GET FADED BarberShop" loading="lazy" />
-              <div class="gallery-caption">Beard detail work</div>
-            </div>
-
-            <div class="gallery-item">
-              <img src="./assets/images/clean-lineup-cut.jpg" alt="Sharp lineup haircut at barbershop" loading="lazy" />
-              <div class="gallery-caption">Crisp lineup</div>
-            </div>
-
-            <div class="gallery-item">
-              <img src="./assets/images/waves-haircut-barber.jpg" alt="Waves haircut with sharp lineup" loading="lazy" />
-              <div class="gallery-caption">Wave cuts</div>
-            </div>
-
-            <div class="gallery-item">
-              <img src="./assets/images/fade-design-kids.jpg" alt="Kids fade with design haircut" loading="lazy" />
-              <div class="gallery-caption">Custom designs</div>
-            </div>
-
-            <div class="gallery-item">
-              <img src="./assets/images/kids-haircut-barber.jpg" alt="Kids haircut at barbershop in Shamokin PA" loading="lazy" />
-              <div class="gallery-caption">Kids cuts welcome</div>
-            </div>
-
-            <div class="gallery-item">
-              <img src="./assets/images/shopfront.jpg" alt="GET FADED BarberShop storefront" loading="lazy" />
-              <div class="gallery-caption">Storefront presence</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block review-section" id="reviews">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Google Reviews</span>
-          <h2 class="section-title">Trusted by Local Families & Returning Clients</h2>
-          <p class="section-sub">Real customer feedback highlighting detailed cuts, kid-friendly service, and consistent results.</p>
-        </div>
-
-        <div class="review-summary-bar">
-          <div class="glass-panel">
-            <div class="review-score">
-              <strong>4.9</strong>
-              <div>
-                <div class="review-stars">★★★★★</div>
-                <div class="muted">Based on your provided review screenshots</div>
-              </div>
-            </div>
-
-            <div class="review-badges">
-              <span class="review-badge">Kid-friendly service</span>
-              <span class="review-badge">Detail-focused cuts</span>
-              <span class="review-badge">Repeat customers</span>
-              <span class="review-badge">Fair pricing</span>
-            </div>
-          </div>
-
-          <div class="glass-panel">
-            <span class="label">Why clients choose Fern</span>
-            <p class="muted">Customers repeatedly mention strong communication, great kid cuts, detailed work, and a welcoming atmosphere.</p>
-          </div>
-        </div>
-
-        <div class="featured-review-grid">
-          <article class="glass-panel">
-            <div class="review-person">
-              <div>
-                <div class="review-name">Jennifer Deeter</div>
-                <div class="review-meta">5 stars • a year ago</div>
-              </div>
-            </div>
-            <p class="review-quote">“The best place I have ever taken my kids for a haircut. Fern is a talented barber!”</p>
-          </article>
-
-          <article class="glass-panel">
-            <div class="review-person">
-              <div>
-                <div class="review-name">Barry D</div>
-                <div class="review-meta">5 stars • 2 years ago</div>
-              </div>
-            </div>
-            <p class="review-quote">“I am very impressed and extremely happy with the finished results.”</p>
-          </article>
-
-          <article class="glass-panel">
-            <div class="review-person">
-              <div>
-                <div class="review-name">Sir John Doe of PA</div>
-                <div class="review-meta">5 stars • a year ago</div>
-              </div>
-            </div>
-            <p class="review-quote">“Fern gave exactly what I wanted. My new go-to on a regular basis.”</p>
-          </article>
-        </div>
-
-        <div class="photo-review-grid">
-          <article class="glass-panel">
-            <div class="review-person">
-              <div>
-                <div class="review-name">Wanlipar Sucharitchandra</div>
-                <div class="review-meta">5 stars • 2 years ago</div>
-              </div>
-              <span class="review-tag">Photo review</span>
-            </div>
-            <p class="review-quote">“My son said he got the best cut he has ever gotten in his life definitely coming back again!”</p>
-            <div class="photo-review-media">
-              <img src="./assets/images/review-photo-wanlipar.jpg" alt="Customer haircut result shared in a Google review for GET FADED BarberShop" loading="lazy" />
-            </div>
-          </article>
-
-          <article class="glass-panel">
-            <div class="review-person">
-              <div>
-                <div class="review-name">sikopata duarte</div>
-                <div class="review-meta">5 stars • 3 years ago</div>
-              </div>
-              <span class="review-tag">Photo review</span>
-            </div>
-            <p class="review-quote">“Love it! He listen, he make u fell human again after da fire haircut.”</p>
-            <div class="photo-review-media">
-              <img src="./assets/images/review-photo-sikopata.jpg" alt="Barber actively cutting a client's hair in a Google review photo for GET FADED BarberShop" loading="lazy" />
-            </div>
-          </article>
-        </div>
-
-        <div class="trust-review-grid">
-          <article class="glass-panel">
-            <div class="review-person">
-              <div>
-                <div class="review-name">Natie luminati</div>
-                <div class="review-meta">5 stars • 2 months ago</div>
-              </div>
-            </div>
-            <p class="review-quote">“My son only wants Fern to cut his hair now.”</p>
-          </article>
-
-          <article class="glass-panel">
-            <div class="review-person">
-              <div>
-                <div class="review-name">Rebekka Hess</div>
-                <div class="review-meta">5 stars • 2 years ago</div>
-              </div>
-            </div>
-            <p class="review-quote">“He did an amazing job cutting my son’s hair. The prices are reasonable.”</p>
-          </article>
-
-          <article class="glass-panel">
-            <div class="review-person">
-              <div>
-                <div class="review-name">Ed Grego</div>
-                <div class="review-meta">5 stars • 10 months ago</div>
-              </div>
-            </div>
-            <p class="review-quote">“This place is awesome. Best place for a boys haircut in town.”</p>
-          </article>
-        </div>
-
-        <div class="review-marquee">
-          <div class="review-track">
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Fern always gives me a fantastic skin fade!”</p><small>— Jacob Townsend</small></article>
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Best price & Best cut in town”</p><small>— joey morales</small></article>
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Best cut in the area.”</p><small>— gaming legend</small></article>
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Very Thorough, does a great job.”</p><small>— Justin Graham</small></article>
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Excellent work. Great price.”</p><small>— Brian</small></article>
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Friendly, knowledgeable, and truly cares.”</p><small>— Christian Kauffman</small></article>
-
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Fern always gives me a fantastic skin fade!”</p><small>— Jacob Townsend</small></article>
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Best price & Best cut in town”</p><small>— joey morales</small></article>
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Best cut in the area.”</p><small>— gaming legend</small></article>
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Very Thorough, does a great job.”</p><small>— Justin Graham</small></article>
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Excellent work. Great price.”</p><small>— Brian</small></article>
-            <article class="mini-review"><div class="review-stars">★★★★★</div><p>“Friendly, knowledgeable, and truly cares.”</p><small>— Christian Kauffman</small></article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block">
-      <div class="container">
-        <div class="seo-box">
-          <strong style="display:block; margin-bottom:10px; color: var(--gold);">Local SEO Setup</strong>
-          This page includes Shamokin, PA targeting, barber-related keywords, social preview tags, and local business schema markup.
-        </div>
-      </div>
-    </section>
-
-    <section class="block" id="contact">
-      <div class="container location-grid">
-        <div class="location-card">
-          <span class="eyebrow">Visit Us</span>
-          <h2 class="section-title">Our Location</h2>
-          <p class="section-sub">322 N Shamokin St, Shamokin, PA 17872</p>
-          <p class="muted">
-            <a href="tel:5704924680">(570) 492-4680</a><br>
-            getfadedbyfern@gmail.com
-          </p>
-          <p class="muted">
-            Monday: 10:00 AM – 5:30 PM<br>
-            Tuesday: 10:00 AM – 5:30 PM<br>
-            Wednesday: 10:00 AM – 5:30 PM<br>
-            Thursday: 10:00 AM – 5:30 PM<br>
-            Friday: 10:00 AM – 6:30 PM<br>
-            Saturday: 10:00 AM – 6:30 PM<br>
-            Sunday: Closed
-          </p>
-
-          <div class="hero-actions">
-            <a class="cta" href="tel:5704924680">Call to Set an Appointment</a>
-          </div>
-        </div>
-
-        <div class="map-media">
-          <iframe
-            title="GET FADED BarberShop map"
-            loading="lazy"
-            allowfullscreen
-            referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=322%20N%20Shamokin%20St%2C%20Shamokin%2C%20PA%2017872&output=embed">
-          </iframe>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-inner">© 2026 GET FADED BarberShop — Shamokin, PA</div>
-  </footer>
-
-  <div class="unmute-banner" id="unmuteBanner">
-    <div>
-      <strong style="display:block; color: var(--gold);">Tap to unmute</strong>
-      <span class="muted" style="font-size:0.9rem;">Music starts muted for better browser compatibility.</span>
-    </div>
-    <button class="player-btn" id="unmuteButton">Unmute</button>
-  </div>
-
-  <div class="music-player" id="musicPlayer">
-    <div class="music-header">
-      <div>
-        <div class="label" style="margin:0;">Shop Audio</div>
-        <div class="music-title" id="trackTitle">Track 1</div>
-      </div>
-      <button class="player-btn" id="playToggle">Play</button>
-    </div>
-
-    <div class="progress">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
-
-    <div class="music-buttons">
-      <button class="tiny-btn" id="prevBtn">Prev</button>
-      <button class="tiny-btn" id="nextBtn">Next</button>
-      <button class="tiny-btn" id="muteBtn">Unmute</button>
-      <label class="muted" style="margin-left:auto; font-size:0.8rem;">
-        Vol
-        <input id="volumeControl" type="range" min="0" max="1" step="0.01" value="0.55">
-      </label>
-    </div>
-
-    <audio id="siteAudio" preload="auto" playsinline muted></audio>
-  </div>
-
-  <script>
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navMenu = document.getElementById('navMenu');
-
-    if (mobileToggle && navMenu) {
-      mobileToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('show');
-      });
-    }
-
-    const audio = document.getElementById('siteAudio');
-    const trackTitle = document.getElementById('trackTitle');
-    const playToggle = document.getElementById('playToggle');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const muteBtn = document.getElementById('muteBtn');
-    const volumeControl = document.getElementById('volumeControl');
-    const progressBar = document.getElementById('progressBar');
-    const unmuteBanner = document.getElementById('unmuteBanner');
-    const unmuteButton = document.getElementById('unmuteButton');
-
-    const tracks = [
-      { title: 'Track 1', src: './assets/audio/shop-track-1.mp3' },
-      { title: 'Track 2', src: './assets/audio/shop-track-2.mp3' },
-      { title: 'Track 3', src: './assets/audio/shop-track-3.mp3' }
-    ];
-
-    let currentTrackIndex = 0;
-
-    function loadTrack(index) {
-      if (!audio || !trackTitle) return;
-      currentTrackIndex = (index + tracks.length) % tracks.length;
-      const track = tracks[currentTrackIndex];
-      audio.src = track.src;
-      trackTitle.textContent = track.title;
-    }
-
-    function updateMuteUi() {
-      if (!audio || !muteBtn || !playToggle || !unmuteBanner) return;
-
-      const isMuted = audio.muted || audio.volume === 0;
-      muteBtn.textContent = isMuted ? 'Unmute' : 'Mute';
-      playToggle.textContent = audio.paused ? 'Play' : 'Pause';
-
-      if (isMuted) {
-        unmuteBanner.classList.add('show');
-      } else {
-        unmuteBanner.classList.remove('show');
-      }
-    }
-
-    function playAudio() {
-      if (!audio) return;
-      audio.play().catch(() => {});
-      updateMuteUi();
-    }
-
-    function pauseAudio() {
-      if (!audio) return;
-      audio.pause();
-      updateMuteUi();
-    }
-
-    function nextTrack() {
-      if (!audio) return;
-      loadTrack(currentTrackIndex + 1);
-      audio.currentTime = 0;
-      playAudio();
-    }
-
-    function prevTrack() {
-      if (!audio) return;
-      loadTrack(currentTrackIndex - 1);
-      audio.currentTime = 0;
-      playAudio();
-    }
-
-    function unmuteAudio() {
-      if (!audio || !volumeControl) return;
-      audio.muted = false;
-      if (audio.volume === 0) {
-        audio.volume = Number(volumeControl.value || 0.55);
-      }
-      playAudio();
-      updateMuteUi();
-    }
-
-    if (playToggle) {
-      playToggle.addEventListener('click', () => {
-        if (!audio) return;
-        if (audio.paused) {
-          playAudio();
-        } else {
-          pauseAudio();
-        }
-      });
-    }
-
-    if (nextBtn) nextBtn.addEventListener('click', nextTrack);
-    if (prevBtn) prevBtn.addEventListener('click', prevTrack);
-
-    if (muteBtn) {
-      muteBtn.addEventListener('click', () => {
-        if (!audio) return;
-        if (audio.muted || audio.volume === 0) {
-          unmuteAudio();
-        } else {
-          audio.muted = true;
-          updateMuteUi();
-        }
-      });
-    }
-
-    if (unmuteButton) {
-      unmuteButton.addEventListener('click', unmuteAudio);
-    }
-
-    if (volumeControl) {
-      volumeControl.addEventListener('input', (e) => {
-        if (!audio) return;
-        const vol = Number(e.target.value);
-        audio.volume = vol;
-        localStorage.setItem('gf_volume', String(vol));
-
-        if (vol > 0) audio.muted = false;
-        if (vol === 0) audio.muted = true;
-
-        updateMuteUi();
-      });
-    }
-
-    if (audio) {
-      audio.addEventListener('timeupdate', () => {
-        if (!audio.duration || !progressBar) return;
-        const progress = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = `${progress}%`;
-      });
-
-      audio.addEventListener('ended', nextTrack);
-    }
-
-    const savedVolume = localStorage.getItem('gf_volume');
-    if (savedVolume !== null && volumeControl) {
-      volumeControl.value = savedVolume;
-    }
-
-    if (audio && volumeControl) {
-      loadTrack(0);
-      audio.volume = Number(volumeControl.value);
-      audio.muted = true;
-      updateMuteUi();
-    }
-  </script>
-</body>
-</html>
+  
+  
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+  <title>GET FADED BarberShop | Shamokin, PA</title>  
+  
+  <meta name="description" content="GET FADED BarberShop in Shamokin, PA offers clean fades, sharp lineups, beard trims, kids cuts, and quality grooming in a premium shop environment." />  
+  <meta name="keywords" content="barber Shamokin PA, GET FADED BarberShop, fades Shamokin, beard trim Shamokin, kids haircut Shamokin" />  
+  
+  <meta property="og:title" content="GET FADED BarberShop | Shamokin, PA" />  
+  <meta property="og:description" content="Clean fades, sharp lineups, beard work, and premium grooming in Shamokin, PA." />  
+  <meta property="og:type" content="website" />  
+  <meta property="og:image" content="assets/images/shopfront.jpg" />  
+  
+  <meta name="twitter:card" content="summary_large_image" />  
+  <meta name="twitter:title" content="GET FADED BarberShop | Shamokin, PA" />  
+  <meta name="twitter:description" content="Clean fades, sharp lineups, beard work, and premium grooming in Shamokin, PA." />  
+  <meta name="twitter:image" content="assets/images/shopfront.jpg" />  
+  
+  <script type="application/ld+json">  
+  {  
+    "@context": "https://schema.org",  
+    "@type": "Barbershop",  
+    "name": "GET FADED BarberShop",  
+    "image": "assets/images/shopfront.jpg",  
+    "telephone": "+1-570-492-4680",  
+    "email": "getfadedbyfern@gmail.com",  
+    "address": {  
+      "@type": "PostalAddress",  
+      "streetAddress": "322 N Shamokin St",  
+      "addressLocality": "Shamokin",  
+      "addressRegion": "PA",  
+      "postalCode": "17872",  
+      "addressCountry": "US"  
+    },  
+    "areaServed": "Shamokin, PA",  
+    "openingHours": [  
+      "Mo 10:00-17:30",  
+      "Tu 10:00-17:30",  
+      "We 10:00-17:30",  
+      "Th 10:00-17:30",  
+      "Fr 10:00-18:30",  
+      "Sa 10:00-18:30"  
+    ]  
+  }  
+  </script>  
+  
+  <style>  
+    :root {  
+      --bg: #070707;  
+      --panel: rgba(16,16,16,0.82);  
+      --panel-2: rgba(10,10,10,0.92);  
+      --line: rgba(255,255,255,0.08);  
+      --text: #f5efe7;  
+      --muted: rgba(245,239,231,0.74);  
+      --gold: #d4a373;  
+      --gold-2: #c78f58;  
+      --red: #d14e43;  
+      --blue: #6e95cb;  
+      --radius: 24px;  
+      --shadow: 0 24px 60px rgba(0,0,0,0.38);  
+      --max: 1180px;  
+    }  
+  
+    * { box-sizing: border-box; }  
+    html { scroll-behavior: smooth; }  
+  
+    body {  
+      margin: 0;  
+      font-family: Arial, Helvetica, sans-serif;  
+      color: var(--text);  
+      background: var(--bg);  
+      overflow-x: hidden;  
+    }  
+  
+    a {  
+      color: inherit;  
+      text-decoration: none;  
+    }  
+  
+    img {  
+      display: block;  
+      max-width: 100%;  
+    }  
+  
+    .container {  
+      width: min(var(--max), calc(100% - 32px));  
+      margin: 0 auto;  
+    }  
+  
+    .bg-image {  
+      position: fixed;  
+      inset: 0;  
+      z-index: -5;  
+      background:  
+        linear-gradient(rgba(0,0,0,0.74), rgba(0,0,0,0.88)),  
+        url("assets/images/shopfront.jpg") center/cover no-repeat;  
+      transform: scale(1.03);  
+    }  
+  
+    .bg-overlay {  
+      position: fixed;  
+      inset: 0;  
+      z-index: -4;  
+      pointer-events: none;  
+      background:  
+        radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.34) 62%, rgba(0,0,0,0.86) 100%);  
+    }  
+  
+    .heartbeat-overlay {  
+      position: fixed;  
+      inset: 0;  
+      z-index: -3;  
+      pointer-events: none;  
+      opacity: 0.72;  
+    }  
+  
+    .heartbeat-overlay svg {  
+      position: absolute;  
+      left: 50%;  
+      top: 48%;  
+      width: min(1500px, 128vw);  
+      transform: translate(-50%, -50%);  
+      overflow: visible;  
+    }  
+  
+    .heartbeat-line {  
+      fill: none;  
+      stroke: url(#ekgGradient);  
+      stroke-width: 4;  
+      stroke-linecap: round;  
+      stroke-linejoin: round;  
+      stroke-dasharray: 14 10;  
+      animation: dashFlow 16s linear infinite, linePulse 2.8s ease-in-out infinite;  
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.14));  
+    }  
+  
+    .heartbeat-glow {  
+      fill: none;  
+      stroke: rgba(255,255,255,0.14);  
+      stroke-width: 10;  
+      stroke-linecap: round;  
+      stroke-linejoin: round;  
+      filter: blur(10px);  
+      opacity: 0.42;  
+      animation: lineGlow 2.8s ease-in-out infinite;  
+    }  
+  
+    @keyframes dashFlow {  
+      from { stroke-dashoffset: 0; }  
+      to { stroke-dashoffset: -480; }  
+    }  
+  
+    @keyframes linePulse {  
+      0%,100% { opacity: 0.84; }  
+      50% { opacity: 1; }  
+    }  
+  
+    @keyframes lineGlow {  
+      0%,100% { opacity: 0.26; }  
+      50% { opacity: 0.58; }  
+    }  
+  
+    .topbar {  
+      position: sticky;  
+      top: 0;  
+      z-index: 50;  
+      background: rgba(5,5,5,0.86);  
+      backdrop-filter: blur(12px);  
+      border-bottom: 1px solid var(--line);  
+    }  
+  
+    .topbar-inner {  
+      min-height: 76px;  
+      display: flex;  
+      align-items: center;  
+      justify-content: space-between;  
+      gap: 20px;  
+    }  
+  
+    .brand {  
+      display: flex;  
+      align-items: center;  
+      gap: 12px;  
+      font-weight: 800;  
+      letter-spacing: 0.16em;  
+      text-transform: uppercase;  
+      color: var(--gold);  
+    }  
+  
+    .brand-mark {  
+      width: 44px;  
+      height: 44px;  
+      border-radius: 50%;  
+      display: grid;  
+      place-items: center;  
+      border: 1px solid rgba(255,255,255,0.12);  
+      background: rgba(255,255,255,0.04);  
+      box-shadow: 0 0 18px rgba(212,163,115,0.2);  
+      font-size: 1.1rem;  
+    }  
+  
+    .nav {  
+      display: flex;  
+      gap: 22px;  
+      color: var(--muted);  
+      font-size: 0.95rem;  
+      align-items: center;  
+    }  
+  
+    .nav a:hover { color: #fff; }  
+  
+    .mobile-toggle {  
+      display: none;  
+      min-width: 46px;  
+      min-height: 46px;  
+      border-radius: 14px;  
+      border: 1px solid rgba(255,255,255,0.12);  
+      background: rgba(255,255,255,0.03);  
+      color: var(--text);  
+      cursor: pointer;  
+      font-size: 1.05rem;  
+    }  
+  
+    .hero {  
+      min-height: 100vh;  
+      display: grid;  
+      align-items: center;  
+      padding: 68px 0 56px;  
+    }  
+  
+    .hero-inner {  
+      display: grid;  
+      grid-template-columns: 1.05fr 0.95fr;  
+      gap: 30px;  
+      align-items: center;  
+    }  
+  
+    .eyebrow {  
+      display: inline-block;  
+      margin-bottom: 18px;  
+      color: var(--gold);  
+      text-transform: uppercase;  
+      letter-spacing: 0.34em;  
+      font-size: 0.78rem;  
+    }  
+  
+    h1 {  
+      margin: 0;  
+      font-size: clamp(3rem, 7vw, 5.8rem);  
+      line-height: 0.95;  
+      letter-spacing: 0.03em;  
+      color: var(--gold);  
+    }  
+  
+    .hero-copy p {  
+      margin: 16px 0 0;  
+      max-width: 700px;  
+      color: var(--muted);  
+      line-height: 1.8;  
+      font-size: 1.04rem;  
+    }  
+  
+    .hero-actions {  
+      display: flex;  
+      flex-wrap: wrap;  
+      gap: 14px;  
+      margin-top: 28px;  
+    }  
+  
+    .cta {  
+      display: inline-flex;  
+      align-items: center;  
+      justify-content: center;  
+      min-height: 50px;  
+      padding: 0 22px;  
+      border-radius: 999px;  
+      border: 1px solid rgba(255,255,255,0.12);  
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));  
+      color: #111;  
+      font-weight: 800;  
+      box-shadow: 0 0 18px rgba(212,163,115,0.26);  
+      transition: transform 0.2s ease, box-shadow 0.2s ease;  
+      text-align: center;  
+    }  
+  
+    .cta:hover {  
+      transform: translateY(-1px);  
+      box-shadow: 0 0 24px rgba(212,163,115,0.34);  
+    }  
+  
+    .cta.secondary {  
+      background: rgba(255,255,255,0.03);  
+      color: var(--text);  
+      box-shadow: none;  
+    }  
+  
+    .panel,  
+    .hero-card,  
+    .stat-card,  
+    .card,  
+    .service-card,  
+    .review-card,  
+    .location-card {  
+      background: var(--panel);  
+      border: 1px solid rgba(255,255,255,0.08);  
+      box-shadow: var(--shadow);  
+      border-radius: var(--radius);  
+      backdrop-filter: blur(12px);  
+    }  
+  
+    .hero-card {  
+      padding: 24px;  
+    }  
+  
+    .hero-card img {  
+      width: 100%;  
+      aspect-ratio: 1 / 1;  
+      object-fit: cover;  
+      border-radius: 20px;  
+      border: 1px solid rgba(255,255,255,0.08);  
+    }  
+  
+    .hero-card small {  
+      display: block;  
+      margin-top: 14px;  
+      color: var(--muted);  
+      line-height: 1.7;  
+    }  
+  
+    section.block {  
+      padding: 84px 0;  
+    }  
+  
+    .section-head {  
+      margin-bottom: 26px;  
+    }  
+  
+    .section-title {  
+      margin: 0;  
+      font-size: clamp(2rem, 4vw, 3rem);  
+      color: var(--gold);  
+    }  
+  
+    .section-sub {  
+      margin: 10px 0 0;  
+      max-width: 760px;  
+      color: var(--muted);  
+      line-height: 1.75;  
+    }  
+  
+    .stats-grid,  
+    .team-grid,  
+    .service-grid,  
+    .gallery-grid,  
+    .reviews-grid,  
+    .location-grid {  
+      display: grid;  
+      gap: 20px;  
+    }  
+  
+    .stats-grid { grid-template-columns: repeat(3, 1fr); }  
+    .team-grid { grid-template-columns: 1.1fr 1fr 1fr 1fr; }  
+    .service-grid { grid-template-columns: repeat(2, 1fr); }  
+    .gallery-grid { grid-template-columns: repeat(4, 1fr); }  
+    .reviews-grid { grid-template-columns: repeat(3, 1fr); }  
+    .location-grid { grid-template-columns: repeat(2, 1fr); }  
+  
+    .stat-card,  
+    .card,  
+    .service-card,  
+    .review-card,  
+    .location-card {  
+      padding: 24px;  
+    }  
+  
+    .label {  
+      display: block;  
+      margin-bottom: 10px;  
+      color: var(--gold);  
+      text-transform: uppercase;  
+      letter-spacing: 0.25em;  
+      font-size: 0.72rem;  
+    }  
+  
+    .muted { color: var(--muted); }  
+    .price { color: var(--gold); font-size: 1.35rem; font-weight: 800; }  
+  
+    .owner-card {  
+      overflow: hidden;  
+      background:  
+        radial-gradient(circle at top left, rgba(212,163,115,0.10), transparent 28%),  
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));  
+    }  
+  
+    .owner-photo-wrap {  
+      position: relative;  
+      margin-bottom: 18px;  
+    }  
+  
+    .owner-photo {  
+      width: 100%;  
+      height: 360px;  
+      object-fit: cover;  
+      border-radius: 20px;  
+      border: 1px solid rgba(255,255,255,0.10);  
+    }  
+  
+    .owner-badge {  
+      position: absolute;  
+      left: 14px;  
+      bottom: 14px;  
+      padding: 8px 12px;  
+      border-radius: 999px;  
+      background: rgba(0,0,0,0.74);  
+      border: 1px solid rgba(255,255,255,0.12);  
+      color: var(--gold);  
+      font-size: 0.76rem;  
+      letter-spacing: 0.16em;  
+      text-transform: uppercase;  
+    }  
+  
+    .owner-row {  
+      display: flex;  
+      align-items: center;  
+      justify-content: space-between;  
+      gap: 12px;  
+      margin-bottom: 10px;  
+    }  
+  
+    .pill {  
+      display: inline-flex;  
+      align-items: center;  
+      padding: 8px 12px;  
+      border-radius: 999px;  
+      background: rgba(255,255,255,0.04);  
+      border: 1px solid rgba(255,255,255,0.08);  
+      color: var(--muted);  
+      font-size: 0.82rem;  
+    }  
+  
+    .pill-wrap {  
+      display: flex;  
+      flex-wrap: wrap;  
+      gap: 10px;  
+      margin: 16px 0 18px;  
+    }  
+  
+    .card img,  
+    .gallery-item img,  
+    .review-photo img {  
+      width: 100%;  
+      object-fit: cover;  
+      border-radius: 18px;  
+      border: 1px solid rgba(255,255,255,0.08);  
+    }  
+  
+    .card img {  
+      aspect-ratio: 3 / 4;  
+      margin-bottom: 16px;  
+    }  
+  
+    .gallery-item {  
+      overflow: hidden;  
+      border-radius: 20px;  
+      border: 1px solid rgba(255,255,255,0.08);  
+      background: rgba(255,255,255,0.03);  
+    }  
+  
+    .gallery-item img {  
+      aspect-ratio: 1 / 1;  
+    }  
+  
+    .gallery-caption {  
+      padding: 12px 14px;  
+      color: var(--muted);  
+      font-size: 0.92rem;  
+    }  
+  
+    .review-card {  
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));  
+    }  
+  
+    .review-head {  
+      display: flex;  
+      align-items: center;  
+      justify-content: space-between;  
+      gap: 12px;  
+      margin-bottom: 12px;  
+    }  
+  
+    .review-name {  
+      font-weight: 800;  
+      font-size: 1.05rem;  
+    }  
+  
+    .review-meta {  
+      color: var(--muted);  
+      font-size: 0.88rem;  
+      margin-top: 4px;  
+    }  
+  
+    .review-stars {  
+      color: var(--gold);  
+      letter-spacing: 0.14em;  
+    }  
+  
+    .review-quote {  
+      line-height: 1.75;  
+      color: var(--text);  
+    }  
+  
+    .review-photo {  
+      margin-top: 16px;  
+      border-radius: 18px;  
+      overflow: hidden;  
+      background: rgba(255,255,255,0.03);  
+    }  
+  
+    .review-photo img {  
+      aspect-ratio: 16 / 11;  
+    }  
+  
+    .map-wrap {  
+      min-height: 420px;  
+      border-radius: 24px;  
+      overflow: hidden;  
+      border: 1px solid rgba(255,255,255,0.08);  
+      background: rgba(255,255,255,0.03);  
+    }  
+  
+    .map-wrap iframe {  
+      width: 100%;  
+      height: 100%;  
+      border: 0;  
+      display: block;  
+    }  
+  
+    footer {  
+      padding: 0 0 112px;  
+    }  
+  
+    .footer-inner {  
+      border-top: 1px solid rgba(255,255,255,0.08);  
+      padding-top: 28px;  
+      color: rgba(255,255,255,0.58);  
+      font-size: 0.95rem;  
+    }  
+  
+    .unmute-banner {  
+      position: fixed;  
+      left: 50%;  
+      bottom: 110px;  
+      transform: translateX(-50%);  
+      z-index: 54;  
+      width: min(92vw, 480px);  
+      padding: 14px 16px;  
+      border-radius: 18px;  
+      background: rgba(6,6,6,0.9);  
+      border: 1px solid rgba(255,255,255,0.10);  
+      display: none;  
+      align-items: center;  
+      justify-content: space-between;  
+      gap: 16px;  
+      box-shadow: 0 18px 45px rgba(0,0,0,0.36);  
+      backdrop-filter: blur(16px);  
+    }  
+  
+    .unmute-banner.show { display: flex; }  
+  
+    .music-player {  
+      position: fixed;  
+      right: 16px;  
+      bottom: 16px;  
+      z-index: 55;  
+      width: min(92vw, 360px);  
+      border-radius: 24px;  
+      background: rgba(3,3,3,0.92);  
+      border: 1px solid rgba(255,255,255,0.10);  
+      box-shadow: 0 22px 45px rgba(0,0,0,0.42);  
+      backdrop-filter: blur(18px);  
+      overflow: hidden;  
+    }  
+  
+    .player-heartbeat-bg {  
+      position: absolute;  
+      inset: 0;  
+      pointer-events: none;  
+      z-index: 0;  
+      opacity: 0.95;  
+    }  
+  
+    .player-heartbeat-bg svg {  
+      position: absolute;  
+      left: 50%;  
+      top: 50%;  
+      width: 140%;  
+      transform: translate(-50%, -50%);  
+      overflow: visible;  
+    }  
+  
+    .player-heartbeat-glow {  
+      fill: none;  
+      stroke: rgba(255,255,255,0.10);  
+      stroke-width: 10;  
+      stroke-linecap: round;  
+      stroke-linejoin: round;  
+      filter: blur(8px);  
+      opacity: 0.48;  
+      animation: playerGlowPulse 2.8s ease-in-out infinite;  
+    }  
+  
+    .player-heartbeat-line {  
+      fill: none;  
+      stroke: url(#playerEkgGradient);  
+      stroke-width: 3;  
+      stroke-linecap: round;  
+      stroke-linejoin: round;  
+      stroke-dasharray: 12 8;  
+      animation: playerDashFlow 12s linear infinite, playerLinePulse 2.2s ease-in-out infinite;  
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.14));  
+    }  
+  
+    .player-content {  
+      position: relative;  
+      z-index: 1;  
+      padding: 14px;  
+      background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0.50));  
+    }  
+  
+    .music-header,  
+    .music-buttons {  
+      display: flex;  
+      align-items: center;  
+      gap: 10px;  
+    }  
+  
+    .music-header { justify-content: space-between; }  
+    .music-buttons { margin-top: 18px; flex-wrap: wrap; }  
+  
+    .music-title {  
+      margin: 4px 0 0;  
+      font-size: 1rem;  
+      font-weight: 700;  
+      color: var(--gold);  
+    }  
+  
+    .player-btn,  
+    .tiny-btn,  
+    input[type="range"] {  
+      font: inherit;  
+    }  
+  
+    .player-btn,  
+    .tiny-btn {  
+      border: 1px solid rgba(255,255,255,0.12);  
+      background: rgba(255,255,255,0.04);  
+      color: var(--text);  
+      border-radius: 999px;  
+      cursor: pointer;  
+    }  
+  
+    .player-btn {  
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));  
+      color: #111;  
+      font-weight: 800;  
+      padding: 10px 16px;  
+    }  
+  
+    .tiny-btn { padding: 8px 12px; }  
+  
+    .progress {  
+      margin-top: 12px;  
+      height: 7px;  
+      border-radius: 999px;  
+      overflow: hidden;  
+      background: rgba(255,255,255,0.08);  
+    }  
+  
+    .progress-bar {  
+      width: 0;  
+      height: 100%;  
+      background: linear-gradient(90deg, var(--red), var(--gold));  
+    }  
+  
+    input[type="range"] { accent-color: var(--gold); }  
+  
+    @keyframes playerDashFlow {  
+      from { stroke-dashoffset: 0; }  
+      to { stroke-dashoffset: -320; }  
+    }  
+  
+    @keyframes playerLinePulse {  
+      0%,100% { opacity: 0.82; }  
+      50% { opacity: 1; }  
+    }  
+  
+    @keyframes playerGlowPulse {  
+      0%,100% { opacity: 0.28; }  
+      50% { opacity: 0.58; }  
+    }  
+  
+    @media (max-width: 1024px) {  
+      .hero-inner,  
+      .location-grid { grid-template-columns: 1fr; }  
+  
+      .team-grid { grid-template-columns: 1fr 1fr; }  
+      .stats-grid,  
+      .service-grid,  
+      .reviews-grid { grid-template-columns: 1fr 1fr; }  
+      .gallery-grid { grid-template-columns: 1fr 1fr; }  
+    }  
+  
+    @media (max-width: 760px) {  
+      .mobile-toggle {  
+        display: inline-grid;  
+        place-items: center;  
+      }  
+  
+      .nav {  
+        display: none;  
+        width: 100%;  
+        flex-direction: column;  
+        align-items: flex-start;  
+        padding: 8px 0 16px;  
+      }  
+  
+      .nav.show { display: flex; }  
+  
+      .topbar-inner {  
+        flex-wrap: wrap;  
+        padding: 14px 0;  
+      }  
+  
+      .stats-grid,  
+      .team-grid,  
+      .service-grid,  
+      .gallery-grid,  
+      .reviews-grid,  
+      .location-grid {  
+        grid-template-columns: 1fr;  
+      }  
+  
+      .music-player {  
+        right: 10px;  
+        left: 10px;  
+        width: auto;  
+        bottom: 10px;  
+      }  
+  
+      .unmute-banner {  
+        left: 10px;  
+        right: 10px;  
+        width: auto;  
+        transform: none;  
+        bottom: 128px;  
+      }  
+  
+      section.block { padding: 68px 0; }  
+    }  
+  </style>  
+</head>  
+<body>  
+  <div class="bg-image"></div>  
+  <div class="bg-overlay"></div>  
+  
+  <div class="heartbeat-overlay" aria-hidden="true">  
+    <svg viewBox="0 0 1400 520" role="presentation">  
+      <defs>  
+        <linearGradient id="ekgGradient" x1="0" y1="0" x2="1400" y2="0" gradientUnits="userSpaceOnUse">  
+          <stop offset="0%" stop-color="#f7e7dc" />  
+          <stop offset="28%" stop-color="#d14e43" />  
+          <stop offset="48%" stop-color="#f7e7dc" />  
+          <stop offset="76%" stop-color="#6e95cb" />  
+          <stop offset="100%" stop-color="#f7e7dc" />  
+        </linearGradient>  
+      </defs>  
+  
+      <path class="heartbeat-glow" d="M20 260 L90 320 L140 320 L165 110 L180 370 L235 210 L290 280 L360 280 L390 120 L410 320 L470 320 L500 390 L555 190 L590 240 L660 240 L720 300 L790 300 L820 120 L835 350 L885 255 L930 195 L990 255 L1060 255 L1100 320 L1160 320 L1190 135 L1205 350 L1265 200 L1320 200 L1370 120" />  
+      <path class="heartbeat-line" d="M20 260 L90 320 L140 320 L165 110 L180 370 L235 210 L290 280 L360 280 L390 120 L410 320 L470 320 L500 390 L555 190 L590 240 L660 240 L720 300 L790 300 L820 120 L835 350 L885 255 L930 195 L990 255 L1060 255 L1100 320 L1160 320 L1190 135 L1205 350 L1265 200 L1320 200 L1370 120" />  
+    </svg>  
+  </div>  
+  
+  <header class="topbar">  
+    <div class="container topbar-inner">  
+      <a class="brand" href="#home">  
+        <span class="brand-mark">✂</span>  
+        <span>GET FADED</span>  
+      </a>  
+  
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu">☰</button>  
+  
+      <nav class="nav" id="navMenu">  
+        <a href="#owner">Owner</a>  
+        <a href="#services">Services</a>  
+        <a href="#gallery">Gallery</a>  
+        <a href="#reviews">Reviews</a>  
+        <a href="#contact">Contact</a>  
+      </nav>  
+    </div>  
+  </header>  
+  
+  <main>  
+    <section class="hero" id="home">  
+      <div class="container hero-inner">  
+        <div class="hero-copy">  
+          <span class="eyebrow">Cuts • Culture • Community</span>  
+          <h1>GET FADED <br>BarberShop</h1>  
+          <p>Not just a cut — a reset.</p>  
+          <p>Highly rated barbershop in Shamokin, PA offering clean fades, sharp lineups, beard work, kids cuts, and quality grooming in a professional shop environment.</p>  
+          <p>Located at 322 N Shamokin St, Shamokin, PA 17872, GET FADED BarberShop serves the local community with modern cuts, detailed grooming, and a laid-back premium experience.</p>  
+  
+          <div class="hero-actions">  
+            <a class="cta" href="tel:5704924680">Call to Set an Appointment</a>  
+            <a class="cta secondary" href="#services">View Services</a>  
+          </div>  
+        </div>  
+  
+        <div class="hero-card">  
+          <img src="assets/images/shopfront.jpg" alt="GET FADED BarberShop storefront" loading="eager" />  
+          <small>Dark premium branding, polished visuals, strong local positioning, and a clean customer-first experience built to make the shop stand out.</small>  
+        </div>  
+      </div>  
+    </section>  
+  
+    <section class="block">  
+      <div class="container">  
+        <div class="stats-grid">  
+          <div class="stat-card">  
+            <span class="label">Location</span>  
+            <div>322 N Shamokin St<br>Shamokin, PA 17872</div>  
+          </div>  
+  
+          <div class="stat-card">  
+            <span class="label">Hours</span>  
+            <div>Mon–Thu 10AM–5:30PM<br>Fri–Sat 10AM–6:30PM<br>Sun Closed</div>  
+          </div>  
+  
+          <div class="stat-card">  
+            <span class="label">Call</span>  
+            <div>  
+              <a href="tel:5704924680">(570) 492-4680</a><br>  
+              <span class="muted">getfadedbyfern@gmail.com</span>  
+            </div>  
+          </div>  
+        </div>  
+      </div>  
+    </section>  
+  
+    <section class="block" id="owner">  
+      <div class="container">  
+        <div class="section-head">  
+          <span class="eyebrow">Owner Spotlight</span>  
+          <h2 class="section-title">Meet Fernando</h2>  
+          <p class="section-sub">Known locally for clean fades, sharp detail work, and a professional shop atmosphere that keeps customers coming back.</p>  
+        </div>  
+  
+        <div class="team-grid">  
+          <article class="card owner-card">  
+            <div class="owner-photo-wrap">  
+              <img class="owner-photo" src="assets/images/owner-barber-fernando.jpg" alt="Fernando owner barber at GET FADED BarberShop" loading="lazy" />  
+              <span class="owner-badge">Owner / Barber</span>  
+            </div>  
+  
+            <div class="owner-row">  
+              <strong>Fernando</strong>  
+              <span class="pill">Shamokin, PA</span>  
+            </div>  
+  
+            <div class="pill-wrap">  
+              <span class="pill">Highly rated locally</span>  
+              <span class="pill">Clean detail work</span>  
+              <span class="pill">Trusted barber</span>  
+              <span class="pill">Kid-friendly</span>  
+            </div>  
+  
+            <p class="muted">Specializes in fades, lineups, detailed beard work, and polished finishes.</p>  
+            <p class="muted">Owner-operated and community-focused, with a reputation for consistency, professionalism, and making clients feel taken care of.</p>  
+  
+            <div class="hero-actions">  
+              <a class="cta secondary" href="tel:5704924680">Call to Set an Appointment</a>  
+            </div>  
+          </article>  
+  
+          <article class="card">  
+            <img src="assets/images/kids-haircut-barber.jpg" alt="Kids haircut at GET FADED BarberShop" loading="lazy" />  
+            <strong>Kids Cuts</strong>  
+            <p class="muted">Friendly, welcoming service with clean cuts for younger clients too.</p>  
+          </article>  
+  
+          <article class="card">  
+            <img src="assets/images/clean-lineup-cut.jpg" alt="Clean lineup haircut at GET FADED BarberShop" loading="lazy" />  
+            <strong>Sharp Details</strong>  
+            <p class="muted">Crisp lineups and polished finishing work for a fresh look every time.</p>  
+          </article>  
+  
+          <article class="card">  
+            <img src="assets/images/beard-lineup-shamokin.jpg" alt="Beard lineup and grooming at GET FADED BarberShop" loading="lazy" />  
+            <strong>Beard Work</strong>  
+            <p class="muted">Sharp beard shaping, edge work, and detail-focused grooming.</p>  
+          </article>  
+        </div>  
+      </div>  
+    </section>  
+  
+    <section class="block" id="services">  
+      <div class="container">  
+        <div class="section-head">  
+          <span class="eyebrow">Our Services</span>  
+          <h2 class="section-title">Premium Grooming</h2>  
+          <p class="section-sub">Premium cuts, clean detail work, sharp grooming, and a laid-back professional shop experience in Shamokin, PA.</p>  
+        </div>  
+  
+        <div class="service-grid">  
+          <div class="service-card">  
+            <span class="label">Haircut</span>  
+            <div class="muted">30–45 min</div>  
+            <p class="muted">Clean fades, modern cuts, lineups, and polished finishes.</p>  
+            <div class="price">$45+</div>  
+          </div>  
+  
+          <div class="service-card">  
+            <span class="label">Haircut + Beard</span>  
+            <div class="muted">45–60 min</div>  
+            <p class="muted">Full haircut paired with beard shaping and detail work.</p>  
+            <div class="price">$60+</div>  
+          </div>  
+  
+          <div class="service-card">  
+            <span class="label">Beard Trim</span>  
+            <div class="muted">15–25 min</div>  
+            <p class="muted">Clean beard shaping, edge work, and a polished finish.</p>  
+            <div class="price">$20+</div>  
+          </div>  
+  
+          <div class="service-card">  
+            <span class="label">Lineup / Shape Up</span>  
+            <div class="muted">15–20 min</div>  
+            <p class="muted">Sharp line work for hairline, edges, and finishing detail.</p>  
+            <div class="price">$18+</div>  
+          </div>  
+  
+          <div class="service-card">  
+            <span class="label">Kids Cut</span>  
+            <div class="muted">20–35 min</div>  
+            <p class="muted">Clean, kid-friendly service in a laid-back shop environment.</p>  
+            <div class="price">$30+</div>  
+          </div>  
+  
+          <div class="service-card">  
+            <span class="label">Razor Shave</span>  
+            <div class="muted">20–30 min</div>  
+            <p class="muted">Smooth shave service with premium detail and finish.</p>  
+            <div class="price">$40+</div>  
+          </div>  
+  
+          <div class="service-card">  
+            <span class="label">Design Work</span>  
+            <div class="muted">By request</div>  
+            <p class="muted">Custom parts, design details, and style-focused finishing touches.</p>  
+            <div class="price">$15+ add-on</div>  
+          </div>  
+  
+          <div class="service-card">  
+            <span class="label">Custom Looks</span>  
+            <div class="muted">By request</div>  
+            <p class="muted">Waves, specialty styling, and personalized grooming work.</p>  
+            <div class="price">Custom quote</div>  
+          </div>  
+        </div>  
+      </div>  
+    </section>  
+  
+    <section class="block" id="gallery">  
+      <div class="container">  
+        <div class="section-head">  
+          <span class="eyebrow">Our Work</span>  
+          <h2 class="section-title">Fresh Cuts</h2>  
+          <p class="section-sub">A premium visual showcase of clean fades, sharp lineups, beard detail work, kid cuts, and modern barbering.</p>  
+        </div>  
+  
+        <div class="gallery-grid">  
+          <div class="gallery-item">  
+            <img src="assets/images/barbershop-interior-shamokin.jpg" alt="Inside GET FADED BarberShop in Shamokin PA" loading="lazy" />  
+            <div class="gallery-caption">Inside the shop</div>  
+          </div>  
+  
+          <div class="gallery-item">  
+            <img src="assets/images/barber-fade-shamokin-pa-1.jpg" alt="Barber doing a fade haircut in Shamokin PA" loading="lazy" />  
+            <div class="gallery-caption">Precision fade in progress</div>  
+          </div>  
+  
+          <div class="gallery-item">  
+            <img src="assets/images/modern-fade-cut.jpg" alt="Modern fade haircut clean lineup" loading="lazy" />  
+            <div class="gallery-caption">Clean modern fade</div>  
+          </div>  
+  
+          <div class="gallery-item">  
+            <img src="assets/images/beard-lineup-shamokin.jpg" alt="Sharp beard lineup" loading="lazy" />  
+            <div class="gallery-caption">Beard detail work</div>  
+          </div>  
+  
+          <div class="gallery-item">  
+            <img src="assets/images/clean-lineup-cut.jpg" alt="Sharp lineup haircut" loading="lazy" />  
+            <div class="gallery-caption">Crisp lineup</div>  
+          </div>  
+  
+          <div class="gallery-item">  
+            <img src="assets/images/waves-haircut-barber.jpg" alt="Waves haircut with sharp lineup" loading="lazy" />  
+            <div class="gallery-caption">Wave cuts</div>  
+          </div>  
+  
+          <div class="gallery-item">  
+            <img src="assets/images/fade-design-kids.jpg" alt="Kids fade with design haircut" loading="lazy" />  
+            <div class="gallery-caption">Custom designs</div>  
+          </div>  
+  
+          <div class="gallery-item">  
+            <img src="assets/images/shopfront.jpg" alt="GET FADED BarberShop storefront" loading="lazy" />  
+            <div class="gallery-caption">Storefront presence</div>  
+          </div>  
+        </div>  
+      </div>  
+    </section>  
+  
+    <section class="block" id="reviews">  
+      <div class="container">  
+        <div class="section-head">  
+          <span class="eyebrow">Google Reviews</span>  
+          <h2 class="section-title">Trusted by Local Families & Returning Clients</h2>  
+          <p class="section-sub">Real customer feedback highlighting detail-focused cuts, kid-friendly service, fair pricing, and consistent results.</p>  
+        </div>  
+  
+        <div class="reviews-grid">  
+          <article class="review-card">  
+            <div class="review-head">  
+              <div>  
+                <div class="review-name">Jennifer Deeter</div>  
+                <div class="review-meta">5 stars • a year ago</div>  
+              </div>  
+              <div class="review-stars">★★★★★</div>  
+            </div>  
+            <p class="review-quote">“The best place I have ever taken my kids for a haircut. Fern is a talented barber!”</p>  
+          </article>  
+  
+          <article class="review-card">  
+            <div class="review-head">  
+              <div>  
+                <div class="review-name">Barry D</div>  
+                <div class="review-meta">5 stars • 2 years ago</div>  
+              </div>  
+              <div class="review-stars">★★★★★</div>  
+            </div>  
+            <p class="review-quote">“I am very impressed and extremely happy with the finished results.”</p>  
+          </article>  
+  
+          <article class="review-card">  
+            <div class="review-head">  
+              <div>  
+                <div class="review-name">Sir John Doe of PA</div>  
+                <div class="review-meta">5 stars • a year ago</div>  
+              </div>  
+              <div class="review-stars">★★★★★</div>  
+            </div>  
+            <p class="review-quote">“Fern gave exactly what I wanted. My new go-to on a regular basis.”</p>  
+          </article>  
+  
+          <article class="review-card">  
+            <div class="review-head">  
+              <div>  
+                <div class="review-name">Wanlipar Sucharitchandra</div>  
+                <div class="review-meta">5 stars • 2 years ago</div>  
+              </div>  
+              <div class="review-stars">★★★★★</div>  
+            </div>  
+            <p class="review-quote">“My son said he got the best cut he has ever gotten in his life definitely coming back again!”</p>  
+            <div class="review-photo">  
+              <img src="assets/images/review-photo-wanlipar.jpg" alt="Customer haircut result shared in review" loading="lazy" />  
+            </div>  
+          </article>  
+  
+          <article class="review-card">  
+            <div class="review-head">  
+              <div>  
+                <div class="review-name">sikopata duarte</div>  
+                <div class="review-meta">5 stars • 3 years ago</div>  
+              </div>  
+              <div class="review-stars">★★★★★</div>  
+            </div>  
+            <p class="review-quote">“Love it! He listen, he make u fell human again after da fire haircut.”</p>  
+            <div class="review-photo">  
+              <img src="assets/images/review-photo-sikopata.jpg" alt="Barber cutting client hair in review photo" loading="lazy" />  
+            </div>  
+          </article>  
+  
+          <article class="review-card">  
+            <div class="review-head">  
+              <div>  
+                <div class="review-name">Natie luminati</div>  
+                <div class="review-meta">5 stars • 2 months ago</div>  
+              </div>  
+              <div class="review-stars">★★★★★</div>  
+            </div>  
+            <p class="review-quote">“My son only wants Fern to cut his hair now.”</p>  
+          </article>  
+        </div>  
+      </div>  
+    </section>  
+  
+    <section class="block" id="contact">  
+      <div class="container location-grid">  
+        <div class="location-card">  
+          <span class="eyebrow">Visit Us</span>  
+          <h2 class="section-title">Our Location</h2>  
+          <p class="section-sub">322 N Shamokin St, Shamokin, PA 17872</p>  
+          <p class="muted">  
+            <a href="tel:5704924680">(570) 492-4680</a><br>  
+            getfadedbyfern@gmail.com  
+          </p>  
+          <p class="muted">  
+            Monday: 10:00 AM – 5:30 PM<br>  
+            Tuesday: 10:00 AM – 5:30 PM<br>  
+            Wednesday: 10:00 AM – 5:30 PM<br>  
+            Thursday: 10:00 AM – 5:30 PM<br>  
+            Friday: 10:00 AM – 6:30 PM<br>  
+            Saturday: 10:00 AM – 6:30 PM<br>  
+            Sunday: Closed  
+          </p>  
+  
+          <div class="hero-actions">  
+            <a class="cta" href="tel:5704924680">Call to Set an Appointment</a>  
+          </div>  
+        </div>  
+  
+        <div class="map-wrap">  
+          <iframe  
+            title="GET FADED BarberShop map"  
+            loading="lazy"  
+            allowfullscreen  
+            referrerpolicy="no-referrer-when-downgrade"  
+            src="https://www.google.com/maps?q=322%20N%20Shamokin%20St%2C%20Shamokin%2C%20PA%2017872&output=embed">  
+          </iframe>  
+        </div>  
+      </div>  
+    </section>  
+  </main>  
+  
+  <footer>  
+    <div class="container footer-inner">© 2026 GET FADED BarberShop — Shamokin, PA</div>  
+  </footer>  
+  
+  <div class="unmute-banner" id="unmuteBanner">  
+    <div>  
+      <strong style="display:block; color: var(--gold);">Tap to unmute</strong>  
+      <span class="muted" style="font-size:0.9rem;">Music starts muted for better browser compatibility.</span>  
+    </div>  
+    <button class="player-btn" id="unmuteButton">Unmute</button>  
+  </div>  
+  
+  <div class="music-player" id="musicPlayer">  
+    <div class="player-heartbeat-bg" aria-hidden="true">  
+      <svg viewBox="0 0 800 260" role="presentation">  
+        <defs>  
+          <linearGradient id="playerEkgGradient" x1="0" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse">  
+            <stop offset="0%" stop-color="#f7e7dc" />  
+            <stop offset="28%" stop-color="#d14e43" />  
+            <stop offset="48%" stop-color="#f7e7dc" />  
+            <stop offset="76%" stop-color="#6e95cb" />  
+            <stop offset="100%" stop-color="#f7e7dc" />  
+          </linearGradient>  
+        </defs>  
+  
+        <path class="player-heartbeat-glow" d="M10 130 L70 130 L95 80 L112 185 L140 112 L188 130 L250 130 L275 65 L290 165 L340 130 L402 130 L425 205 L470 88 L500 130 L560 130 L610 130 L635 70 L650 172 L700 115 L745 130 L790 130" />  
+        <path class="player-heartbeat-line" d="M10 130 L70 130 L95 80 L112 185 L140 112 L188 130 L250 130 L275 65 L290 165 L340 130 L402 130 L425 205 L470 88 L500 130 L560 130 L610 130 L635 70 L650 172 L700 115 L745 130 L790 130" />  
+      </svg>  
+    </div>  
+  
+    <div class="player-content">  
+      <div class="music-header">  
+        <div>  
+          <div class="label" style="margin:0;">Shop Audio</div>  
+          <div class="music-title" id="trackTitle">Track 1</div>  
+        </div>  
+        <button class="player-btn" id="playToggle">Play</button>  
+      </div>  
+  
+      <div class="progress">  
+        <div class="progress-bar" id="progressBar"></div>  
+      </div>  
+  
+      <div class="music-buttons">  
+        <button class="tiny-btn" id="prevBtn">Prev</button>  
+        <button class="tiny-btn" id="nextBtn">Next</button>  
+        <button class="tiny-btn" id="muteBtn">Unmute</button>  
+        <label class="muted" style="margin-left:auto; font-size:0.8rem;">  
+          Vol  
+          <input id="volumeControl" type="range" min="0" max="1" step="0.01" value="0.55" />  
+        </label>  
+      </div>  
+  
+      <audio id="siteAudio" preload="auto" playsinline muted></audio>  
+    </div>  
+  </div>  
+  
+  <script>  
+    const mobileToggle = document.getElementById("mobileToggle");  
+    const navMenu = document.getElementById("navMenu");  
+  
+    if (mobileToggle && navMenu) {  
+      mobileToggle.addEventListener("click", () => {  
+        navMenu.classList.toggle("show");  
+      });  
+    }  
+  
+    const audio = document.getElementById("siteAudio");  
+    const trackTitle = document.getElementById("trackTitle");  
+    const playToggle = document.getElementById("playToggle");  
+    const prevBtn = document.getElementById("prevBtn");  
+    const nextBtn = document.getElementById("nextBtn");  
+    const muteBtn = document.getElementById("muteBtn");  
+    const volumeControl = document.getElementById("volumeControl");  
+    const progressBar = document.getElementById("progressBar");  
+    const unmuteBanner = document.getElementById("unmuteBanner");  
+    const unmuteButton = document.getElementById("unmuteButton");  
+  
+    const tracks = [  
+      { title: "Track 1", src: "assets/audio/shop-track-1.mp3" },  
+      { title: "Track 2", src: "assets/audio/shop-track-2.mp3" },  
+      { title: "Track 3", src: "assets/audio/shop-track-3.mp3" }  
+    ];  
+  
+    let currentTrackIndex = 0;  
+  
+    function loadTrack(index) {  
+      if (!audio || !trackTitle) return;  
+      currentTrackIndex = (index + tracks.length) % tracks.length;  
+      const track = tracks[currentTrackIndex];  
+      audio.src = track.src;  
+      trackTitle.textContent = track.title;  
+      audio.load();  
+    }  
+  
+    function updatePlayerUI() {  
+      if (!audio || !muteBtn || !playToggle || !unmuteBanner) return;  
+  
+      const isMuted = audio.muted || audio.volume === 0;  
+      muteBtn.textContent = isMuted ? "Unmute" : "Mute";  
+      playToggle.textContent = audio.paused ? "Play" : "Pause";  
+  
+      if (isMuted) {  
+        unmuteBanner.classList.add("show");  
+      } else {  
+        unmuteBanner.classList.remove("show");  
+      }  
+    }  
+  
+    function playAudio() {  
+      if (!audio) return;  
+      audio.play().then(() => {  
+        updatePlayerUI();  
+      }).catch(() => {  
+        updatePlayerUI();  
+      });  
+    }  
+  
+    function pauseAudio() {  
+      if (!audio) return;  
+      audio.pause();  
+      updatePlayerUI();  
+    }  
+  
+    function nextTrack() {  
+      if (!audio) return;  
+      loadTrack(currentTrackIndex + 1);  
+      playAudio();  
+    }  
+  
+    function prevTrack() {  
+      if (!audio) return;  
+      loadTrack(currentTrackIndex - 1);  
+      playAudio();  
+    }  
+  
+    function unmuteAudio() {  
+      if (!audio || !volumeControl) return;  
+      audio.muted = false;  
+      if (audio.volume === 0) {  
+        audio.volume = Number(volumeControl.value || 0.55);  
+      }  
+      playAudio();  
+      updatePlayerUI();  
+    }  
+  
+    if (playToggle) {  
+      playToggle.addEventListener("click", () => {  
+        if (!audio) return;  
+        if (audio.paused) playAudio();  
+        else pauseAudio();  
+      });  
+    }  
+  
+    if (nextBtn) nextBtn.addEventListener("click", nextTrack);  
+    if (prevBtn) prevBtn.addEventListener("click", prevTrack);  
+  
+    if (muteBtn) {  
+      muteBtn.addEventListener("click", () => {  
+        if (!audio) return;  
+        if (audio.muted || audio.volume === 0) unmuteAudio();  
+        else {  
+          audio.muted = true;  
+          updatePlayerUI();  
+        }  
+      });  
+    }  
+  
+    if (unmuteButton) {  
+      unmuteButton.addEventListener("click", unmuteAudio);  
+    }  
+  
+    if (volumeControl) {  
+      volumeControl.addEventListener("input", (e) => {  
+        if (!audio) return;  
+        const vol = Number(e.target.value);  
+        audio.volume = vol;  
+        localStorage.setItem("gf_volume", String(vol));  
+        audio.muted = vol === 0;  
+        updatePlayerUI();  
+      });  
+    }  
+  
+    if (audio) {  
+      audio.addEventListener("timeupdate", () => {  
+        if (!audio.duration || !progressBar) return;  
+        const progress = (audio.currentTime / audio.duration) * 100;  
+        progressBar.style.width = `${progress}%`;  
+      });  
+  
+      audio.addEventListener("ended", nextTrack);  
+    }  
+  
+    const savedVolume = localStorage.getItem("gf_volume");  
+    if (savedVolume !== null && volumeControl) {  
+      volumeControl.value = savedVolume;  
+    }  
+  
+    if (audio && volumeControl) {  
+      loadTrack(0);  
+      audio.volume = Number(volumeControl.value);  
+      audio.muted = true;  
+      updatePlayerUI();  
+    }  
+  </script>  
+</body>  
+</html>  
